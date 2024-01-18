@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="3dp"
+    app:cardElevation="3dp"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nom"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:id="@+id/noma_txt"
+                android:textColor="@color/black"
+
+
+            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Homme - Age"
+                android:textColor="#A8000000"
+                android:id="@+id/genre_age"
+                android:textSize="15dp"
+
+
+                />
+
+
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_edit"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/editBtn"
+            />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_sup"
+            android:background="@null"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/supBtn"
+            android:layout_marginTop="35dp"
+            />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

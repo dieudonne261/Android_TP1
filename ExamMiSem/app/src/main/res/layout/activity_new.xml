@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E1E9EF"
+    android:paddingTop="150dp"
+
+    tools:context=".NewActivity">
+
+    <TextView
+        android:id="@+id/textViewt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="#2196F3"
+        android:text="Nouveau"
+        tools:ignore="MissingConstraints" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+
+        android:background="@drawable/bd"
+        tools:ignore="MissingConstraints"
+        android:layout_marginTop="80dp"
+
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nomtxt"
+            android:layout_marginHorizontal="30dp"
+            android:text="Nom"
+            android:textColor="#2195F3"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="-5dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nomtxt"
+            android:id="@+id/nom"
+            android:layout_marginHorizontal="28dp"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/genre"
+            android:layout_below="@+id/nom"
+            android:layout_marginHorizontal="30dp"
+            android:text="Genre"
+            android:textColor="#2195F3"
+            android:textSize="19dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            />
+        <Spinner
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/genre"
+
+            android:entries="@array/gender_options"
+            android:layout_marginHorizontal="14dp"
+            android:padding="10dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Date"
+            android:layout_below="@+id/gender"
+            android:layout_marginHorizontal="30dp"
+            android:text="Date de naissance"
+            android:textColor="#2195F3"
+            android:textSize="19dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Date"
+            android:id="@+id/Ddn"
+            android:text="Saisir ..."
+            android:layout_marginHorizontal="30dp"
+            android:textSize="20dp"
+            />
+
+        <Button
+            android:id="@+id/buttonsave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/btn"
+
+            android:padding="12dp"
+            android:text="Enregistrer"
+
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
