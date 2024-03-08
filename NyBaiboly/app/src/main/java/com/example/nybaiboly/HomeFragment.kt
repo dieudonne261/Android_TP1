@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +26,7 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
+    private lateinit var search: TextInputEditText
     private lateinit var testamentAdapter: TestamentAdapter
     private lateinit var testamentList: ArrayList<Testament>
 
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.recyclerViewTestament)
+        search = view.findViewById(R.id.rechtxt)
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
@@ -52,6 +57,38 @@ class HomeFragment : Fragment() {
         testamentList.addAll(databaseHelper.getTestamentData())
         testamentAdapter.notifyDataSetChanged()
         databaseHelper.close()
+
+        val element = DataSample.retrievePreferences(requireContext())
+
+        if (element.third == "Malagasy"){
+            search.hint = "Hitady"
+            view.findViewById<TextView>(R.id.textView20).text = "Tongasoa"
+        }
+        else if( element.third == "Français"){
+            view.findViewById<TextView>(R.id.textView20).text = "Bienvenue"
+            search.hint = "Rechercher"
+        }
+        else {
+            view.findViewById<TextView>(R.id.textView20).text = "Welcome"
+            search.hint = "Search"
+        }
+
+        view.findViewById<ImageButton>(R.id.searchbtn).setOnClickListener {
+            val bundle = Bundle()
+
+            bundle.putString("search",
+                view.findViewById<TextInputEditText>(R.id.rechtxt).text.toString()
+            )
+            val searchFragment = SearchFragment()
+            searchFragment.arguments = bundle
+            val fragmentManager = requireActivity().supportFragmentManager
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout, searchFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+
     }
 
     override fun onCreateView(

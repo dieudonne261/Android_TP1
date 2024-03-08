@@ -1,11 +1,9 @@
+package com.example.nybaiboly
+
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.nybaiboly.ChapitreEtVerse
-import com.example.nybaiboly.DatabaseOpenHelper
-import com.example.nybaiboly.Livres
-import com.example.nybaiboly.Testament
 
 class DatabaseHelper private constructor(context: Context) {
 
@@ -104,7 +102,7 @@ class DatabaseHelper private constructor(context: Context) {
 
     fun getVerseData(idlivres : Int, idChapitre : String): ArrayList<ChapitreEtVerse> {
         val arrayList = ArrayList<ChapitreEtVerse>()
-        val selectQuery = "SELECT * FROM ci_diem_andininy WHERE a_bid = $idlivres AND a_toko = $idChapitre ORDER by a_order"
+        val selectQuery = "SELECT * FROM ci_diem_andininy WHERE a_bid = $idlivres AND a_toko = '$idChapitre' ORDER by a_order"
         val cursor: Cursor = db!!.rawQuery(selectQuery, null)
         if (cursor.moveToFirst()) {
             do {
@@ -121,4 +119,43 @@ class DatabaseHelper private constructor(context: Context) {
         cursor.close()
         return arrayList
     }
+
+    fun getSearchData(elmsearch : String): ArrayList<Search> {
+        val arrayList = ArrayList<Search>()
+        //val selectQuery = "SELECT * FROM ci_diem_andininy WHERE a_text like '%$elmsearch%' ORDER by a_order"
+        val selectQuery = "SELECT ci_diem_andininy.*,ci_diem_boky.b_name FROM ci_diem_andininy,ci_diem_boky WHERE ci_diem_boky.id == ci_diem_andininy.a_bid and ci_diem_andininy.a_text like '%$elmsearch%' ORDER by ci_diem_andininy.a_order"
+        //SELECT ci_diem_andininy.*,ci_diem_boky.b_name FROM ci_diem_andininy,ci_diem_boky WHERE ci_diem_boky.id == ci_diem_andininy.a_bid and ci_diem_andininy.a_text like '%a%' ORDER by ci_diem_andininy.a_order
+
+        val cursor: Cursor = db!!.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id_chapitre_et_verse = cursor.getString(0)
+                val id_chapitre = cursor.getString(2)
+                val id_verse = cursor.getString(3)
+                var id_livre = cursor.getString(1)
+                var text = cursor.getString(4)
+                var texta = cursor.getString(7)
+                val chapitre = Search(id_chapitre_et_verse,id_livre,id_chapitre,id_verse,text,texta,elmsearch)
+                arrayList.add(chapitre)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return arrayList
+    }
+
+    //SELECT ci_diem_boky.b_name , ci_diem_andininy.a_bid from ci_diem_boky, ci_diem_andininy WHERE ci_diem_andininy.a_bid == ci_diem_boky.id and ci_diem_andininy.a_bid = 29 LIMIT 1
+
+    fun getSearch(idB: String): String? {
+        var result = ""
+        val selectQuery = "SELECT b_name from ci_diem_boky WHERE a_bid = $idB"
+        val cursor: Cursor = db!!.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                result =  cursor.getString(0) + " : " + cursor.getString(1)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return result
+    }
+
 }

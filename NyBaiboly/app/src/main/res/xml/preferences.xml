@@ -4,7 +4,7 @@
     <CheckBoxPreference
         android:key="isModeSombre"
         android:title="Mode Sombre"
-        android:defaultValue="true" />
+        android:defaultValue="false" />
     <CheckBoxPreference
         android:key="isSetting"
         android:title="Setting"
@@ -18,7 +18,7 @@
     <EditTextPreference
         android:key="bibleFontSize"
         android:title="Bible Font Size"
-        android:defaultValue="1" />
+        android:defaultValue="10" />
 
     <EditTextPreference
         android:key="id_testament"

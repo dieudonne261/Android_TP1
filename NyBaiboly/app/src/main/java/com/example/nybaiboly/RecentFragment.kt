@@ -16,17 +16,17 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LivreFragment.newInstance] factory method to
+ * Use the [RecentFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LivreFragment : Fragment() {
+class RecentFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var textView: TextView
-    private lateinit var livresAdapter: LivresAdapter
-    private lateinit var livresList: ArrayList<Livres>
+    private lateinit var recentAdapter: RecentAdapter
+    private lateinit var recentList: ArrayList<Recent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +36,41 @@ class LivreFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val idTestament = arguments?.getInt("id_testament", 0) ?: 0
-        recyclerView = view.findViewById(R.id.recyclerViewLivre)
-        textView = view.findViewById(R.id.textView5)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.setHasFixedSize(true)
-        livresList = ArrayList()
-        livresAdapter = LivresAdapter(requireContext(),livresList)
-        recyclerView.adapter = livresAdapter
-        val databaseHelper = DatabaseHelper.getInstance(requireContext())
-        databaseHelper.open()
-        livresList.addAll(databaseHelper.getLivresData(idTestament))
-        livresAdapter.notifyDataSetChanged()
-        textView.text = databaseHelper.getData("test_name","ci_diem_testamenta",idTestament)
-        databaseHelper.close()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_livre, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_recent, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        recyclerView = view.findViewById(R.id.recyclerViewRecent)
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.setHasFixedSize(true)
+        recentList = ArrayList()
+        recentAdapter = RecentAdapter(requireContext(),recentList)
+        recyclerView.adapter = recentAdapter
+        val databaseHelperLocal = DatabaseHelperLocal.getInstance(requireContext())
+        recentList.addAll(databaseHelperLocal.getAllData())
+        recentAdapter.notifyDataSetChanged()
+
+        val element = DataSample.retrievePreferences(requireContext())
+
+        if (element.third == "Malagasy"){
+            view.findViewById<TextView>(R.id.textView9).text = "Novakina farany"
+        }
+        else if( element.third == "Français"){
+            view.findViewById<TextView>(R.id.textView9).text = "Recent lecture"
+        }
+        else {
+            view.findViewById<TextView>(R.id.textView9).text = "Recent reading"
+        }
+
+
+
     }
 
     companion object {
@@ -68,12 +80,12 @@ class LivreFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LivreFragment.
+         * @return A new instance of fragment RecentFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            LivreFragment().apply {
+            RecentFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

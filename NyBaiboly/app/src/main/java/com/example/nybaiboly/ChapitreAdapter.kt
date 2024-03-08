@@ -37,6 +37,8 @@ class ChapitreAdapter(private val context: Context, private val chapitreList: Ar
                 .addToBackStack(null)
                 .commit()
         }
+
+
     }
     override fun getItemCount() = chapitreList.size
 }

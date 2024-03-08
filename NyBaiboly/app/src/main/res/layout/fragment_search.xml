@@ -4,48 +4,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment"
+    tools:context=".SearchFragment"
     android:layout_margin="10dp">
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/textView25"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="9dp"
         android:gravity="center"
-        android:text="Parametre"
+        android:text="Search"
         android:textSize="30dp" />
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
-        android:layout_below="@+id/textView20"
+        android:layout_below="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/line1">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:theme="@style/Widget.Design.TextInputLayout"
 
+            android:clickable="false"
+            android:enabled="true"
             android:padding="5dp"
-            android:id="@+id/txtlay"
-            >
+            android:theme="@style/Widget.Design.TextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/rechtxt2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rechtxt"/>
+                android:editable="false"
+                tools:ignore="Deprecated" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/searchbtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search"
-            android:layout_below="@+id/txtlay"
-            android:layout_marginHorizontal="9dp"
-            />
 
 
 
@@ -53,12 +52,12 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewTestament"
+        android:id="@+id/recyclerViewSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/line1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/rowbtn" />
+        tools:listitem="@layout/searchbnt" />
 
 
 </RelativeLayout>

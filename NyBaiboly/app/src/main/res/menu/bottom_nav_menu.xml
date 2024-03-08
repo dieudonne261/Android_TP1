@@ -4,13 +4,13 @@
     <item
         android:icon="@drawable/signet"
         android:id="@+id/signet"
-        android:title="Maripejy" />
+        android:title="" />
     <item
         android:icon="@drawable/menu"
         android:id="@+id/menu"
-        android:title="Tongasoa" />
+        android:title="" />
     <item
         android:icon="@drawable/baseline_menu"
         android:id="@+id/setting"
-        android:title="Fikirana" />
+        android:title="" />
 </menu>

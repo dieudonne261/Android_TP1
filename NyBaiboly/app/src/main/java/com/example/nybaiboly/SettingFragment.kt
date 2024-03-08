@@ -1,6 +1,12 @@
 package com.example.nybaiboly
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +33,9 @@ class SettingFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     val languages = arrayOf("Malagasy", "Français", "English")
+    private lateinit var chapitreList: ArrayList<ChapitreEtVerse>
+    private lateinit var textView: TextView
+    private lateinit var textVerse: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +58,9 @@ class SettingFragment : Fragment() {
         var textViewTest = view.findViewById<TextView>(R.id.textViewTest)
         var languageSelectText = view.findViewById<Spinner>(R.id.language)
         val element = DataSample.retrievePreferences(requireContext())
+
+
+        languerChange()
         seekBar.progress = element.fourth
         textViewTest.textSize = if (element.fourth == 0) 1F else (element.fourth * 5).toFloat()
 
@@ -76,6 +88,7 @@ class SettingFragment : Fragment() {
         languageSelectText.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 DataSample.savePreferences(requireContext(), element.first,false,languageSelectText.selectedItem.toString(),seekBar.progress)
+                languerChange()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -99,9 +112,61 @@ class SettingFragment : Fragment() {
 
             }
         })
+
+
+
+        val databaseHelper = DatabaseHelper.getInstance(requireContext())
+        textVerse = view.findViewById(R.id.textViewTest)
+        chapitreList = ArrayList()
+        databaseHelper.open()
+        chapitreList.addAll(databaseHelper.getVerseData(1,"1"))
+        databaseHelper.close()
+        val spannableStringBuilder = SpannableStringBuilder()
+
+        for (chapitreEtVerse in chapitreList) {
+            val verseText = "${chapitreEtVerse.id_verse}. ${chapitreEtVerse.text} "
+            val spannableString = SpannableString(verseText)
+            spannableString.setSpan(
+                ForegroundColorSpan(Color.parseColor("#c894ff")),
+                0,
+                "${chapitreEtVerse.id_verse}.".length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableString.setSpan(
+                RelativeSizeSpan(1.40f),
+                0,
+                "${chapitreEtVerse.id_verse}.".length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannableStringBuilder.append(spannableString)
+        }
+
+        textVerse.text = spannableStringBuilder
+
+
     }
 
-
+    fun languerChange(){
+        val element = DataSample.retrievePreferences(requireContext())
+        if (element.third == "Malagasy"){
+            view?.findViewById<TextView>(R.id.textView2)?.text = "Maody maizina"
+            view?.findViewById<TextView>(R.id.textView3)?.text = "Fiteny"
+            view?.findViewById<TextView>(R.id.textView4)?.text = "Haben'ny endritsoratra"
+            view?.findViewById<TextView>(R.id.textView19)?.text = "Fikirana"
+        }
+        else if( element.third == "Français"){
+            view?.findViewById<TextView>(R.id.textView2)?.text = "Mode sombre"
+            view?.findViewById<TextView>(R.id.textView3)?.text = "Langage"
+            view?.findViewById<TextView>(R.id.textView4)?.text = "Taille du police"
+            view?.findViewById<TextView>(R.id.textView19)?.text = "Paramètre"
+        }
+        else {
+            view?.findViewById<TextView>(R.id.textView2)?.text = "Dark mode"
+            view?.findViewById<TextView>(R.id.textView3)?.text = "Language"
+            view?.findViewById<TextView>(R.id.textView4)?.text = "Font size"
+            view?.findViewById<TextView>(R.id.textView19)?.text = "Setting"
+        }
+    }
 
 
 

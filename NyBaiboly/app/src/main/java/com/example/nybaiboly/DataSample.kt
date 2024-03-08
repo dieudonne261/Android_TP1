@@ -1,7 +1,6 @@
 package com.example.nybaiboly
 
 import android.content.Context
-import android.content.SharedPreferences
 
 object DataSample {
 
@@ -28,10 +27,10 @@ object DataSample {
 
     fun retrievePreferences(context: Context): Quadruple<Boolean, Boolean, String, Int> {
         val sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
-        val isModeSombre = sharedPreferences.getBoolean("isModeSombre", true)
+        val isModeSombre = sharedPreferences.getBoolean("isModeSombre", false)
         val isSetting = sharedPreferences.getBoolean("isSetting", false)
         val languageSelect = sharedPreferences.getString("languageSelect", "Default Language") ?: "Default Language"
-        val bibleFontSize = sharedPreferences.getInt("bibleFontSize", 1)
+        val bibleFontSize = sharedPreferences.getInt("bibleFontSize", 5)
         return Quadruple(isModeSombre, isSetting, languageSelect, bibleFontSize)
     }
 

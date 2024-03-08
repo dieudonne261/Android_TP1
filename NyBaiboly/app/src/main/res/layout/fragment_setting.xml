@@ -9,10 +9,18 @@
     >
 
     <!-- TODO: Update blank fragment layout -->
-
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="9dp"
+        android:gravity="center"
+        android:text="Parametre"
+        android:textSize="30dp" />
 
 
     <RelativeLayout
+        android:layout_below="@+id/textView19"
         android:id="@+id/lin1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -124,6 +132,7 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
                 android:layout_marginHorizontal="10dp"
+                android:justificationMode="inter_word"
                 android:text="hintvsgcvhsvhdvqhdvqhdvvvvvvvvvvvvvvvvvvvvvvvvintvsgcvhsvhdvqhdvqhdvvvvvvvvvvvvvvvvvvvvvvvvintvsgcvhsvhdvqhdvqhdvvvvvvvvvvvvvvvvvvvvvvvv"
                 />
 

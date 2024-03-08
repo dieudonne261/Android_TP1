@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,18 +43,44 @@ class VerseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val databaseHelper = DatabaseHelper.getInstance(requireContext())
+        val databaseHelperLocal = DatabaseHelperLocal.getInstance(requireContext())
         val idchapitre = arguments?.getString("id_chapitre", "") ?: ""
         val element = DataSample.retrieveTestament(requireContext())
         val element_size = DataSample.retrievePreferences(requireContext())
         val idlivre = element.second
-        //val idlivre = databaseHelper.getData("a_bid","ci_diem_andininy",idchapitre)
         textView = view.findViewById(R.id.textView7)
         textVerse = view.findViewById(R.id.textViewVerse)
         chapitreList = ArrayList()
-
         databaseHelper.open()
-        chapitreList.addAll(databaseHelper.getVerseData(idlivre,idchapitre))
-        textView.text = databaseHelper.getData("b_name","ci_diem_boky",idlivre) + " : $idchapitre"
+
+        if (isNotInt(idchapitre)){
+            if(idchapitre.length>7){
+                chapitreList.addAll(databaseHelper.getVerseData(element.second,element.third.toString()))
+                textView.text = idchapitre
+            }
+            else {
+                chapitreList.addAll(databaseHelper.getVerseData(idlivre,idchapitre))
+                textView.text = databaseHelper.getData("b_name","ci_diem_boky",idlivre) + " : $idchapitre"
+                val id = databaseHelperLocal.insertInfo(
+                    textView.text.toString(),
+                    idlivre.toString(),
+                    idchapitre
+                )
+            }
+
+        }
+
+        else {
+            chapitreList.addAll(databaseHelper.getVerseData(idlivre,idchapitre))
+            textView.text = databaseHelper.getData("b_name","ci_diem_boky",idlivre) + " : $idchapitre"
+            val id = databaseHelperLocal.insertInfo(
+                textView.text.toString(),
+                idlivre.toString(),
+                idchapitre
+            )
+        }
+
+
         databaseHelper.close()
         textVerse.textSize = if (element_size.fourth == 0) 1F else (element_size.fourth * 5).toFloat()
 
@@ -89,6 +114,15 @@ class VerseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_verse, container, false)
+    }
+
+    fun isNotInt(idchapitre: String): Boolean {
+        try {
+            idchapitre.toInt()
+            return false // Conversion successful, it's an integer
+        } catch (e: NumberFormatException) {
+            return true // Conversion failed, not an integer
+        }
     }
 
     companion object {
